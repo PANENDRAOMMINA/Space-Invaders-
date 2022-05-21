@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     public float speed;
+    public GameObject bullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,23 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int i = (int)Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(i*speed,0);   
+        Movement();
+        Shoot();
+    }
+
+    private void Movement()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            transform.position += Vector3.right;
+        else if(Input.GetKeyDown(KeyCode.LeftArrow))
+            transform.position += Vector3.left;
+    }
+
+    private void Shoot()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(bullet,new Vector2(transform.position.x,transform.position.y+1),Quaternion.identity);
+        }
     }
 }
