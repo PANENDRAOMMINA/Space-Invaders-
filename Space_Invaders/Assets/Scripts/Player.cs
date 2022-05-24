@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     public float speed;
     public GameObject bullet;
+    public bool shoot=true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +32,16 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space)&&shoot)
         {
-            Instantiate(bullet,new Vector2(transform.position.x,transform.position.y+1),Quaternion.identity);
+            Instantiate(bullet, new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
+            StartCoroutine(Disable_Shoot(1));
         }
+    }
+    IEnumerator Disable_Shoot(float time)
+    {
+        shoot = false;
+        yield return new WaitForSecondsRealtime(time);
+        shoot = true;
     }
 }

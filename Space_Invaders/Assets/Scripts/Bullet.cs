@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bullet : MonoBehaviour
 {
@@ -19,6 +20,14 @@ public class Bullet : MonoBehaviour
     {
         Movement();
     }
+    private void Update()
+    {
+        if(this.gameObject.transform.position.y<=-12f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 
     private void Movement()
     {
@@ -30,16 +39,19 @@ public class Bullet : MonoBehaviour
     {
         if(type=="Player")
         {
-            if(collision.gameObject.tag=="Enemy")
+            if(collision.gameObject.tag == "Enemy")
             {
+                
                 Destroy(collision.gameObject);
+                Enemy_Square.instance.delete_array_element();
                 Destroy(this.gameObject);
             }
         }
         else if(type == "Enemy")
         {
-            if(collision.gameObject.tag=="Player")
+            if(collision.gameObject.tag == "Player")
             {
+                Game_Manager.instance.Restart_level();
                 Destroy(collision.gameObject);
                 Destroy(this.gameObject);
             }
@@ -49,5 +61,8 @@ public class Bullet : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
         }
+
     }
+
+    
 }

@@ -20,8 +20,10 @@ public class Movement : MonoBehaviour
         if (transform.position.x <= -7&&move_left)
             move_left = false;
     }
+
     IEnumerator move()
     {
+
         yield return new WaitForSecondsRealtime(1f);
         if (move_left)
         {
